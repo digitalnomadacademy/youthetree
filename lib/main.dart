@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:youthetree/ui/molecule/code_popup.dart';
+import 'package:youthetree/ui/organism/code_popup.dart';
 
 void main() {
   runApp(YTT());
