@@ -9,7 +9,7 @@ class CodePopup extends StatefulWidget {
 }
 
 class _CodePopupState extends State<CodePopup> {
-  String _codeText;
+  String _codeText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -18,30 +18,35 @@ class _CodePopupState extends State<CodePopup> {
       child: SingleChildScrollView(
         child: Align(
           alignment: Alignment.topCenter,
-          child: Container(
-            color: Colors.white,
-            height: 300,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "Enter Code",
-                  style: TextStyle(fontSize: 30),
-                ),
-                CodeInput(
-                  onChanged: (text) => setState(() {
-                    _codeText = text;
-                  }),
-                  onSubmit: (text) {
-                    _codeText = text;
-                    _submit();
-                  },
-                ),
-                RaisedButton(
-                  child: Text("Confirm"),
-                  onPressed: _codeText.length == 4 ? () => _submit() : null,
-                )
-              ],
+          child: Material(
+            type: MaterialType.transparency,
+            child: Container(
+              color: Colors.white,
+              height: 300,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text(
+                    "Enter Code",
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  CodeInput(
+                    onChanged: (text) => setState(() {
+                      _codeText = text;
+                    }),
+                    onSubmit: (text) {
+                      if (_codeText.length == 4) {
+                        _codeText = text;
+                        _submit();
+                      }
+                    },
+                  ),
+                  RaisedButton(
+                    child: Text("Confirm"),
+                    onPressed: _codeText.length == 4 ? () => _submit() : null,
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -50,10 +55,7 @@ class _CodePopupState extends State<CodePopup> {
   }
 
   void _submit() {
+    Navigator.pop(context);
     print(_codeText);
   }
 }
-
-
-
-
