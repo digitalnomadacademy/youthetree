@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youthetree/router/router.dart';
 import 'package:youthetree/ui/page/test_code_popup_page.dart';
 
 void main() {
@@ -9,7 +10,8 @@ class YTT extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Container(),
+      routes: routes,
+      initialRoute: initialRoute,
     );
   }
 }
