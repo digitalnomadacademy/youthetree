@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:youthetree/provider/provider.dart';
 import 'package:youthetree/router/router.dart';
-import 'package:youthetree/ui/page/test_code_popup_page.dart';
 
 void main() {
   runApp(YTT());
@@ -9,9 +10,12 @@ void main() {
 class YTT extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: routes,
-      initialRoute: initialRoute,
+    return MultiProvider(
+      providers: providers,
+      child: MaterialApp(
+        routes: routes,
+        initialRoute: initialRoute,
+      ),
     );
   }
 }

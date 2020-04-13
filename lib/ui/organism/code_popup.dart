@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:youthetree/emaos/action/login_action.dart';
+import 'package:youthetree/router/router.dart';
 import 'package:youthetree/ui/molecule/code_input.dart';
 
 class CodePopup extends StatefulWidget {
@@ -10,6 +13,8 @@ class CodePopup extends StatefulWidget {
 
 class _CodePopupState extends State<CodePopup> {
   String _codeText = "";
+
+  bool _error = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +35,28 @@ class _CodePopupState extends State<CodePopup> {
                     "Enter Code",
                     style: TextStyle(fontSize: 30),
                   ),
-                  CodeInput(
-                    onChanged: (text) => setState(() {
-                      _codeText = text;
-                    }),
-                    onSubmit: (text) {
-                      if (_codeText.length == 4) {
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: _error ? Colors.red : Colors.transparent)),
+                    child: CodeInput(
+                      onChanged: (text) => setState(() {
                         _codeText = text;
-                        _submit();
-                      }
-                    },
+                      }),
+                      onSubmit: (text) {
+                        if (_codeText.length == 4) {
+                          _codeText = text;
+                          _submit();
+                        }
+                      },
+                    ),
                   ),
+                  _error
+                      ? Text(
+                          "Code Error",
+                          style: TextStyle(color: Colors.red),
+                        )
+                      : Container(),
                   RaisedButton(
                     child: Text("Confirm"),
                     onPressed: _codeText.length == 4 ? () => _submit() : null,
@@ -54,8 +70,18 @@ class _CodePopupState extends State<CodePopup> {
     );
   }
 
-  void _submit() {
-    Navigator.pop(context);
-    print(_codeText);
+  void _submit() async {
+    LoginAction action = Provider.of<LoginAction>(context, listen: false);
+
+    try {
+      await action.confirmCode(_codeText);
+      Navigator.pop(context);
+      Navigator.pushNamed(context, RouteName.home);
+      print(_codeText);
+    } catch (e) {
+      setState(() {
+        _error = true;
+      });
+    }
   }
 }
