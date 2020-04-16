@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: MyApp(),
+    home: LoginPage(),
   ));
 }
 
-class MyApp extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
   _State createState() => _State();
 }
 
-class _State extends State<MyApp> {
+class _State extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
 
@@ -88,7 +88,7 @@ class _State extends State<MyApp> {
                       color: Colors.green,
                       child: Text('Create account'),
                       onPressed: () {
-                        //nešto dodati
+
                       },
                     )),
               ],
