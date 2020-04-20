@@ -5,6 +5,7 @@ class InitialTestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Initial Test"),),
       body: ListView(
         children: routes.keys
             .map((routeName) => Card(
