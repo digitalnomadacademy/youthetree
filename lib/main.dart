@@ -11,7 +11,7 @@ class YTT extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: OnBoardingPage (),
+      home: Container (),
     );
   }
 }
