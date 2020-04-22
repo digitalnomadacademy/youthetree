@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 
@@ -36,7 +35,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   image: DecorationImage(
-                      image: NetworkImage('https://placekitten.com/g/200/300'))))),
+                      image:
+                          NetworkImage('https://placekitten.com/g/200/300'))))),
     );
     slides.add(
       new Slide(
@@ -48,28 +48,26 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   image: DecorationImage(
-                      image: NetworkImage('https://placekitten.com/200/300'))))),
+                      image:
+                          NetworkImage('https://placekitten.com/200/300'))))),
     );
   }
 
-  void onDonePress() {  // Done button is START button
+  void onDonePress() {
+    // Done button is START button
     // TODO: go to next screen
   }
-
 
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
       slides: this.slides,
       onDonePress: this.onDonePress,
-        nameNextBtn: ('SKIP'),
+      nameNextBtn: ('SKIP'),
       isShowSkipBtn: false,
       nameDoneBtn: ('START'),
       sizeDot: 14,
-        shouldHideStatusBar: false,
+      shouldHideStatusBar: false,
     );
   }
 }
-
-
-
