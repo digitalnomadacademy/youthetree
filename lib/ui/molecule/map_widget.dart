@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 const LatLng SOURCE_LOCATION =
-    LatLng(44.87, 13.87); // cca koordinate N i E za Pulu
+    LatLng(44.87, 13.86); // cca koordinate N i E za Pulu
 const double CAMERA_ZOOM = 15.0;
 
 class YttMapWidget extends StatefulWidget {
@@ -23,12 +23,11 @@ class _YttMapWidgetState extends State<YttMapWidget> {
   @override
   void initState() {
     super.initState();
-
     location = new Location();
 
     location.onLocationChanged.listen((LocationData cLoc) {
       currentLocation = cLoc;
-      updatePinOnMap();
+      showPinOnMap();
     });
     setInitialLocation();
   }
@@ -68,13 +67,7 @@ class _YttMapWidgetState extends State<YttMapWidget> {
       );
   }
 
-  void showPinOnMap() {
-    var pinPosition =
-    LatLng(currentLocation.latitude, currentLocation.longitude);
-    updatePinOnMap();
-  }
-
-  void updatePinOnMap() async {
+  void showPinOnMap() async {
     CameraPosition cPosition = CameraPosition(
       target: LatLng(currentLocation.latitude, currentLocation.longitude),
       zoom: CAMERA_ZOOM,
@@ -82,9 +75,7 @@ class _YttMapWidgetState extends State<YttMapWidget> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
     setState(() {
-//      var pinPosition =
-//      LatLng(currentLocation.latitude, currentLocation.longitude);
-      _markers.clear();
+      //_markers.clear();
       final marker = Marker(
         markerId: MarkerId("curr_loc"),
         position: LatLng(currentLocation.latitude, currentLocation.longitude),
