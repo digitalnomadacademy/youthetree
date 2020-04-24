@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
+import 'package:intro_slider/slide_object.dart';
 
 class OnBoardingPage extends StatefulWidget {
   @override
