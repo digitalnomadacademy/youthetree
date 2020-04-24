@@ -6,7 +6,9 @@ class  DynamicColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    body: ResizeWidget(dividerPercentage: 0.7,
+    body: ResizeWidget(
+      dividerPercentage: 0.7,
+      upperBorder: 0.2,
       topChild: Container(
         child: Center(
           child: Text('Top Child',
