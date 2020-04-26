@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1043098443752",
+    "firebase_url": "https://youthetree-db0f6.firebaseio.com",
+    "project_id": "youthetree-db0f6",
+    "storage_bucket": "youthetree-db0f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043098443752:android:db428c281658be7e280e5d",
+        "android_client_info": {
+          "package_name": "com.example.youthetree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1043098443752-uk4c2sl395a1idt31sa8sd9gghcvf8se.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBDfYctFlESBvJWKUZ7lJTjMlg8HaPd5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1043098443752-uk4c2sl395a1idt31sa8sd9gghcvf8se.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
