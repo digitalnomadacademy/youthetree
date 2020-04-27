@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 
+/// Widget that divides the screen in bottom and top half. It can be resized
+/// dynamically.
+///
+/// [topChild] and [bottomChild] are two widgets that you want to separate
+/// [dividerPercentage] is percentage in [0,1] range, that sets the resize factor
+/// [upperBorder] is minimum space in [0,1] range percentage, that will always be
+/// kept on top
+///
 class ResizeWidget extends StatefulWidget {
   final Widget topChild;
   final Widget bottomChild;
   final double dividerPercentage;
   final double upperBorder;
   ResizeWidget(
-      {this.topChild,
-      this.bottomChild,
-      this.dividerPercentage,
-      this.upperBorder});
+      {@required this.topChild,
+      @required this.bottomChild,
+      this.dividerPercentage = 0.5,
+      this.upperBorder = 0});
 
   @override
   _ResizeWidgetState createState() => _ResizeWidgetState();
