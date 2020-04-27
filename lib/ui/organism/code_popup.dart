@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:youthetree/emaos/action/login_action.dart';
 import 'package:youthetree/router/router.dart';
 import 'package:youthetree/ui/molecule/code_input.dart';
