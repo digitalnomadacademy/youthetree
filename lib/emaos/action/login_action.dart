@@ -7,8 +7,8 @@ class LoginA {
 
   LoginA(this._authService);
 
-  Future<void> loginEmail(String email) {
-    return _authService.loginEmail(email);
+  Future<void> loginEmail(String email, String password) {
+    return _authService.loginEmail(email, password);
   }
 
   Future<void> loginPhone(String phone) {
@@ -19,6 +19,5 @@ class LoginA {
     return _authService.confirmCode(code);
   }
 
-  factory LoginA.of(BuildContext context) =>
-      LoginA(StaticProvider.of(context));
+  factory LoginA.of(BuildContext context) => LoginA(StaticProvider.of(context));
 }
