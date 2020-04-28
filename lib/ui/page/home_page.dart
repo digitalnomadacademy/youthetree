@@ -7,6 +7,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         body: SafeArea(
           child: ResizeWidget(
+            dividerPercentage: 0.3,
             topChild: TreeUpdates(),
             bottomChild: Container(
               color: Colors.blue,
