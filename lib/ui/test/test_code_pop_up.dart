@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:youthetree/ui/organism/code_popup.dart';
 
-class TestCodePopupPage extends StatelessWidget {
-  const TestCodePopupPage({
+class TestPopUp extends StatelessWidget {
+  const TestPopUp({
     Key key,
   }) : super(key: key);
 

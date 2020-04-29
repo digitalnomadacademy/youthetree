@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:youthetree/emaos/action/login_action.dart';
 import 'package:youthetree/router/router.dart';
 import 'package:youthetree/ui/molecule/code_input.dart';
@@ -71,10 +70,8 @@ class _CodePopupState extends State<CodePopup> {
   }
 
   void _submit() async {
-    LoginAction action = Provider.of<LoginAction>(context, listen: false);
-
     try {
-      await action.confirmCode(_codeText);
+      await LoginA.of(context).confirmCode(_codeText);
       Navigator.pop(context);
       Navigator.pushNamed(context, RouteName.home);
       print(_codeText);
