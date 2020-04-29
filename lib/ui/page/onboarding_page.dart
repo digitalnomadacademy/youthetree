@@ -9,14 +9,14 @@ class OnBoardingPage extends StatefulWidget {
 }
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
-  List<Slide> slides = new List();
+  List<Slide> slides = [];
 
   @override
   void initState() {
     super.initState();
 
     slides.add(
-      new Slide(
+      Slide(
           backgroundColor: Colors.lightGreen,
           title: "first slide...",
           centerWidget: Container(
@@ -28,7 +28,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       image: NetworkImage('http://placekitten.com/200/300'))))),
     );
     slides.add(
-      new Slide(
+      Slide(
           backgroundColor: Colors.green,
           title: "second slide...",
           centerWidget: Container(
@@ -40,7 +40,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       image: NetworkImage('https://placekitten.com/g/200/300'))))),
     );
     slides.add(
-      new Slide(
+      Slide(
           backgroundColor: Colors.teal,
           title: "third slide...",
           centerWidget: Container(
@@ -54,7 +54,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   }
 
   void onDonePress() {  // Done button is START button
-    // TODO: go to next screen
+    Navigator.pushNamed(context, 'login');
+
   }
 
 
@@ -63,7 +64,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     return IntroSlider(
       slides: this.slides,
       onDonePress: this.onDonePress,
-        nameNextBtn: ('SKIP'),
+        nameNextBtn: ('NEXT'),
       isShowSkipBtn: false,
       nameDoneBtn: ('START'),
       sizeDot: 14,
