@@ -4,9 +4,9 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-const LatLng SOURCE_LOCATION =
+const LatLng kSource_Location =
     LatLng(44.87, 13.86); // cca koordinate N i E za Pulu
-const double CAMERA_ZOOM = 15.0;
+const double kCameraZoom = 15.0;
 
 class YttMapWidget extends StatefulWidget {
   @override
@@ -39,17 +39,18 @@ class _YttMapWidgetState extends State<YttMapWidget> {
   @override
   Widget build(BuildContext context) {
     CameraPosition initialCameraPosition = CameraPosition(
-      target: SOURCE_LOCATION,
-      zoom: CAMERA_ZOOM,
+      target: kSource_Location,
+      zoom: kCameraZoom,
     );
     if (currentLocation != null) {
       initialCameraPosition = CameraPosition(
         target: LatLng(currentLocation.latitude, currentLocation.longitude),
-        zoom: CAMERA_ZOOM,
+        zoom: kCameraZoom,
       );
     }
     return MaterialApp(
       home: Scaffold(
+    //return Scaffold(
         appBar: AppBar(
           title: Center(child: Text('Google Map')),
         ),
@@ -70,7 +71,7 @@ class _YttMapWidgetState extends State<YttMapWidget> {
   void showPinOnMap() async {
     CameraPosition cPosition = CameraPosition(
       target: LatLng(currentLocation.latitude, currentLocation.longitude),
-      zoom: CAMERA_ZOOM,
+      zoom: kCameraZoom,
     );
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
