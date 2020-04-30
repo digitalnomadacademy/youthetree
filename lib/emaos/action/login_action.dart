@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:youthetree/emaos/service/auth_service.dart';
+import 'package:youthetree/provider/provider.dart';
 
-class LoginAction {
+class LoginA {
   final AuthService _authService;
 
-  LoginAction(this._authService);
+  LoginA(this._authService);
 
   Future<void> loginEmail(String email) {
     return _authService.loginEmail(email);
@@ -16,5 +18,7 @@ class LoginAction {
   Future<void> confirmCode(String code) {
     return _authService.confirmCode(code);
   }
-}
 
+  factory LoginA.of(BuildContext context) =>
+      LoginA(StaticProvider.of(context));
+}
