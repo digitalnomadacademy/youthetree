@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:youthetree/emaos/action/login_action.dart';
+import 'package:youthetree/emaos/observable/tree_updates.dart';
 import 'package:youthetree/emaos/observable/user_observable.dart';
 import 'package:youthetree/emaos/service/auth_service.dart';
 
@@ -25,6 +26,22 @@ List<SingleChildWidget> actions = [
 
 List<SingleChildWidget> observables = [
   Provider<UserO>(create: (context) => UserO(email: "youthetree@gmail.com")),
+  Provider<TreeUpdateListO>(
+    create: (context) => TreeUpdateListO(
+      list: [
+        TreeUpdateO(
+            treeName: "Cherry",
+            treeId: "1",
+            updateMessage: "Marko left a message",
+            type: TreeUpdateType.newMessage),
+        TreeUpdateO(
+            treeName: "Cedar",
+            treeId: "2",
+            updateMessage: "There is new photo added",
+            type: TreeUpdateType.newPhoto),
+      ],
+    ),
+  ),
 ];
 
 //List<int> brojevi = [1, 2, 3];
