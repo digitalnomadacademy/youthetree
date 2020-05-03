@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:youthetree/ui/test/test_code_pop_up.dart';
 import 'package:youthetree/ui/page/home_page.dart';
-import 'package:youthetree/ui/page/initial_test.dart';
 import 'package:youthetree/ui/page/splash_page.dart';
-import 'package:youthetree/ui/test/user_avatar_test.dart';
+import 'package:youthetree/ui/page/SplashPage.dart';
+import 'package:youthetree/ui/page/home_page.dart';
 
 Map<String, WidgetBuilder> routes = {
   RouteName.home: (context) => HomePage(),
   RouteName.splash: (context) => SplashPage(),
 
+// TEST ROUTE
+  RouteName.testMap: (context) => MapWidget(),
+};
+
+String initialRoute = RouteName.testMap;
   //  TEST ROUTES
   ...testRoutes
 };
@@ -19,6 +23,9 @@ class RouteName {
   static const String home = '/';
   static const String splash = 'splash';
 
+// TEST ROUTE
+  static const String testMap = 'testMap';
+}
 //  TEST ROUTES
   static const String initialTest = 'initialTest';
   static const String testPopup = 'testPopup';
