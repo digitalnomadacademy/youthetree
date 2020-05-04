@@ -100,13 +100,11 @@ class _EmailFormState extends State<EmailForm> {
 class PhoneForm extends StatefulWidget {
   @override
   _PhoneFormState createState() => _PhoneFormState();
-
 }
 
 class _PhoneFormState extends State<PhoneForm> {
   var formKey = GlobalKey<FormState>();
   String _phone;
-
 
   @override
   Widget build(BuildContext context) {
@@ -122,9 +120,7 @@ class _PhoneFormState extends State<PhoneForm> {
                 child: TextFormField(
                   onSaved: (value) => _phone = value,
                   validator: (value) =>
-                      value.length > 10
-                      ? null
-                      : "enter new phone",
+                      value.length > 10 ? null : "enter new phone",
                   decoration: InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: "phone",
@@ -136,8 +132,6 @@ class _PhoneFormState extends State<PhoneForm> {
               ),
             ],
           ),
-
-
           RaisedButton(
             child: Text("Submit phone"),
             onPressed: _submitPhonePressed,
@@ -146,6 +140,7 @@ class _PhoneFormState extends State<PhoneForm> {
       ),
     );
   }
+
   void _submitPhonePressed() {
     var validation = formKey.currentState.validate();
     if (validation) {
@@ -155,8 +150,8 @@ class _PhoneFormState extends State<PhoneForm> {
           .loginPhone(_phone)
           .then((_) => Navigator.of(context).pushNamed(RouteName.home))
           .catchError((e) => Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(e.toString()),
-      )));
+                content: Text(e.toString()),
+              )));
     }
   }
 }

@@ -44,4 +44,3 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     );
   }
 }
-

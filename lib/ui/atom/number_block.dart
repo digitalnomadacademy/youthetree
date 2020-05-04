@@ -18,9 +18,9 @@ class NumberBlock extends StatelessWidget {
         color: Colors.grey[300],
         child: Center(
             child: Text(
-              text,
-              style: TextStyle(fontSize: 20),
-            )),
+          text,
+          style: TextStyle(fontSize: 20),
+        )),
       ),
     );
   }
