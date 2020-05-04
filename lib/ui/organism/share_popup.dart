@@ -1,33 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
-class SharePopupButton extends StatefulWidget {
-  @override
-  _SharePopupButtonState createState() => _SharePopupButtonState();
-}
-
-class _SharePopupButtonState extends State<SharePopupButton> {
+class SharePopupButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final shareLink = 'www.youthetree.com';
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text("Here's Your Tree"),
-        ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.only(top: 25, right: 25),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            GestureDetector(
-              child: Icon(Icons.share),
-              onTap: () => Share.share(shareLink),
-            ),
-          ],
+    return Card(
+      child: IconButton(
+        padding: const EdgeInsets.all(50.0),
+        alignment: Alignment.topRight,
+        onPressed: () => Share.share('https//www.youthetree.com'),
+        icon: Icon(
+          Icons.share
         ),
       ),
     );
