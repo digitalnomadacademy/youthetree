@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youthetree/emaos/action/create_account_action.dart';
+import 'package:youthetree/emaos/action/login_action.dart';
 import 'package:youthetree/router/router.dart';
 
 class EmailForm extends StatefulWidget {
@@ -99,13 +100,63 @@ class _EmailFormState extends State<EmailForm> {
 class PhoneForm extends StatefulWidget {
   @override
   _PhoneFormState createState() => _PhoneFormState();
+
 }
 
 class _PhoneFormState extends State<PhoneForm> {
+  var formKey = GlobalKey<FormState>();
+  String _phone;
+
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("phone form"),
+    return Form(
+      key: formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                flex: 10,
+                child: TextFormField(
+                  onSaved: (value) => _phone = value,
+                  validator: (value) =>
+                      value.length > 10
+                      ? null
+                      : "enter new phone",
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: "phone",
+                  ),
+                ),
+              ),
+              Spacer(
+                flex: 2,
+              ),
+            ],
+          ),
+
+
+          RaisedButton(
+            child: Text("Submit phone"),
+            onPressed: _submitPhonePressed,
+          )
+        ],
+      ),
     );
+  }
+  void _submitPhonePressed() {
+    var validation = formKey.currentState.validate();
+    if (validation) {
+      formKey.currentState.save();
+      print("login with $_phone");
+      LoginA.of(context)
+          .loginPhone(_phone)
+          .then((_) => Navigator.of(context).pushNamed(RouteName.home))
+          .catchError((e) => Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString()),
+      )));
+    }
   }
 }

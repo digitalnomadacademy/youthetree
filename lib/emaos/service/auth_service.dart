@@ -1,9 +1,12 @@
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:youthetree/ui/organism/code_popup.dart';
 
 class AuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;
+
 
   AuthService() {
     _auth.onAuthStateChanged
@@ -18,11 +21,20 @@ class AuthService {
     return _auth.verifyPhoneNumber(
         phoneNumber: phone,
         timeout: Duration(seconds: 120),
-        verificationCompleted: ((_) => print("verification complete for $_")),
+        verificationCompleted: (AuthCredential credentials) async{
+          AuthResult result=await _auth.signInWithCredential(credentials);
+          FirebaseUser user = result.user;
+          if(user!=null){print('user auto signed in');} //trebalo bi ici na home!!!
+          } ,
         verificationFailed: ((_) => print("verification failed for $_")),
-        codeSent: (_, [__]) => print("code sent $_ $__"),
+        codeSent: (String verificationId, [int forceResendingToken]){
+          return CodePopup();
+        },
         codeAutoRetrievalTimeout: (_) => "code auto retrieval timeout $_");
   }
+
+//AuthCredential  credential = PhoneAuthProvider.getCredential(verificationId: verificationId, smsCode: null);
+
 
   Future<void> confirmCode(String code) {
     var random = Random();
@@ -45,4 +57,6 @@ class AuthService {
       throw e;
     }
   }
+
+
 }
