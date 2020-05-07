@@ -5,6 +5,9 @@ import 'package:youthetree/ui/page/initial_test.dart';
 import 'package:youthetree/ui/page/splash_page.dart';
 import 'package:youthetree/ui/page/SplashPage.dart';
 import 'package:youthetree/ui/page/home_page.dart';
+import 'package:youthetree/ui/page/map_test.dart';
+//import 'package:youthetree/ui/page/SplashPage.dart';
+//import 'package:youthetree/ui/page/home_page.dart';
 
 Map<String, WidgetBuilder> routes = {
   RouteName.home: (context) => HomePage(),
@@ -16,7 +19,7 @@ Map<String, WidgetBuilder> routes = {
 
 
 // TEST ROUTE
-  RouteName.testMap: (context) => MapWidget(),
+  RouteName.testMap: (context) => MapTest(),
 };
 
 String initialRoute = RouteName.testMap;
