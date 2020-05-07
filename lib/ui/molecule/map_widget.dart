@@ -49,8 +49,7 @@ class _MapWidgetState extends State<MapWidget> {
         zoom: kCameraZoom,
       );
     }
-    return MaterialApp(
-        home: GoogleMap(
+    return GoogleMap(
           myLocationEnabled: true,
           mapType: MapType.hybrid,
           initialCameraPosition: initialCameraPosition,
@@ -59,7 +58,6 @@ class _MapWidgetState extends State<MapWidget> {
             mapController = controller;
             showPinOnMap();
           },
-        ),
       );
   }
 
