@@ -43,8 +43,8 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (currentLocation != null) {
-      initialCameraPosition = CameraPosition(
+    if(currentLocation != null) {
+      CameraPosition(
         target: LatLng(currentLocation.latitude, currentLocation.longitude),
         zoom: kCameraZoom,
       );
