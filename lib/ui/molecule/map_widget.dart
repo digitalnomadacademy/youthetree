@@ -4,16 +4,16 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-const LatLng kSource_Location =
+const LatLng kSourceLocation =
     LatLng(44.87, 13.86); // cca koordinate N i E za Pulu
 const double kCameraZoom = 15.0;
 
-class YttMapWidget extends StatefulWidget {
+class MapWidget extends StatefulWidget {
   @override
-  _YttMapWidgetState createState() => _YttMapWidgetState();
+  _MapWidgetState createState() => _MapWidgetState();
 }
 
-class _YttMapWidgetState extends State<YttMapWidget> {
+class _MapWidgetState extends State<MapWidget> {
   GoogleMapController mapController;
   Completer<GoogleMapController> _controller = Completer();
   LocationData currentLocation;
@@ -39,7 +39,7 @@ class _YttMapWidgetState extends State<YttMapWidget> {
   @override
   Widget build(BuildContext context) {
     CameraPosition initialCameraPosition = CameraPosition(
-      target: kSource_Location,
+      target: kSourceLocation,
       zoom: kCameraZoom,
     );
     if (currentLocation != null) {
@@ -49,21 +49,15 @@ class _YttMapWidgetState extends State<YttMapWidget> {
       );
     }
     return MaterialApp(
-      home: Scaffold(
-    //return Scaffold(
-        appBar: AppBar(
-          title: Center(child: Text('Google Map')),
-        ),
-        body: GoogleMap(
+        home: GoogleMap(
           myLocationEnabled: true,
-          //mapType: MapType.hybrid,
+          mapType: MapType.hybrid,
           initialCameraPosition: initialCameraPosition,
           markers: _markers.values.toSet(),
           onMapCreated: (GoogleMapController controller) {
             mapController = controller;
             showPinOnMap();
           },
-        ),
         ),
       );
   }
