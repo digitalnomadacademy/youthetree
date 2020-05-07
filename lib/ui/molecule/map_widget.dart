@@ -43,22 +43,22 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if(currentLocation != null) {
+    if (currentLocation != null) {
       CameraPosition(
         target: LatLng(currentLocation.latitude, currentLocation.longitude),
         zoom: kCameraZoom,
       );
     }
     return GoogleMap(
-          myLocationEnabled: true,
-          mapType: MapType.hybrid,
-          initialCameraPosition: initialCameraPosition,
-          markers: _markers.values.toSet(),
-          onMapCreated: (GoogleMapController controller) {
-            mapController = controller;
-            showPinOnMap();
-          },
-      );
+      myLocationEnabled: true,
+      mapType: MapType.hybrid,
+      initialCameraPosition: initialCameraPosition,
+      markers: _markers.values.toSet(),
+      onMapCreated: (GoogleMapController controller) {
+        mapController = controller;
+        showPinOnMap();
+      },
+    );
   }
 
   void showPinOnMap() async {
