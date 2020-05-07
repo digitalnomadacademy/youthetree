@@ -20,6 +20,11 @@ class _MapWidgetState extends State<MapWidget> {
   Location location;
   final Map<String, Marker> _markers = {};
 
+  CameraPosition initialCameraPosition = CameraPosition(
+    target: kSourceLocation,
+    zoom: kCameraZoom,
+  );
+
   @override
   void initState() {
     super.initState();
@@ -38,10 +43,6 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    CameraPosition initialCameraPosition = CameraPosition(
-      target: kSourceLocation,
-      zoom: kCameraZoom,
-    );
     if (currentLocation != null) {
       initialCameraPosition = CameraPosition(
         target: LatLng(currentLocation.latitude, currentLocation.longitude),
