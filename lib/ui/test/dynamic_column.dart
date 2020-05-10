@@ -8,7 +8,6 @@ class  DynamicColumn extends StatelessWidget {
     return Scaffold(
     body: ResizeWidget(
       dividerPercentage: 0.7,
-      upperBorder: 0.2,
       topChild: Container(
         child: Center(
           child: Text('Top Child',
