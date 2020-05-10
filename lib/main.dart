@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:youthetree/provider/provider.dart';
 import 'package:youthetree/router/router.dart';
 
-
 void main() {
   runApp(YTT());
 }
