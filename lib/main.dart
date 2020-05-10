@@ -12,7 +12,7 @@ class YTT extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: providers,
-      child: MaterialApp(
+    child: MaterialApp(
         routes: routes,
         initialRoute: initialRoute,
       ),
