@@ -7,15 +7,13 @@ class TreeService {
   var _storage = FirebaseStorage.instance;
   var _firestore = Firestore.instance;
 
-
-
   Future<void> createTreeWithImage(File image) async {
     try {
-      Uri url = await _uploadImage(image);
+      String url = await _uploadImage(image);
       // create the document in firestore for that tree with url of the image
 
       await _firestore.collection("trees").add(
-        {"photoUrl": url.toString()},
+        {"photoUrl": url},
       );
       print("tree created in firestore");
     } catch (e) {
@@ -26,11 +24,11 @@ class TreeService {
 
   Future<void> updateTreeImage(File image, String treeId) async {
     try {
-      Uri url = await _uploadImage(image);
+      String url = await _uploadImage(image);
       // create the document in firestore for that tree with url of the image
 
       await _firestore.collection("trees").document(treeId).updateData(
-        {"photoUrl": url.toString()},
+        {"photoUrl": url},
       );
       print("tree created in firestore");
     } catch (e) {
@@ -41,15 +39,35 @@ class TreeService {
 
 //  PRIVATE METHODS
 
-  Future<Uri> _uploadImage(File image) async {
+  Future<String> _uploadImage(File image) async {
     print("creating new tree with image");
     // upload the image
-    var photosReference = _storage.ref().child("/tree_images");
+    var photosReference = _storage
+        .ref()
+        .child("/treeImages/${DateTime.now().millisecondsSinceEpoch}.jpeg");
     StorageTaskSnapshot complete =
         await photosReference.putFile(image).onComplete;
     print("image upload is complete");
-    var url = complete.uploadSessionUri;
+    String url = complete.storageMetadata.path;
     print("url is $url");
     return url;
+  }
+}
+
+class TreeEntity {
+  final String photoUrl;
+
+  TreeEntity({this.photoUrl});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'photoUrl': this.photoUrl,
+    };
+  }
+
+  factory TreeEntity.fromMap(Map<String, dynamic> map) {
+    return TreeEntity(
+      photoUrl: map['photoUrl'] as String,
+    );
   }
 }

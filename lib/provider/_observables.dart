@@ -8,6 +8,7 @@ import 'package:youthetree/provider/provider.dart';
 List<SingleChildWidget> observables = [
   Provider<UserO>(create: (context) => UserO(email: "youthetree@gmail.com")),
   StreamProvider<TreeUpdateListO>(
+      initialData: TreeUpdateListO(),
       create: (context) =>
           StaticProvider.of<TreeModel>(context).treeUpdateListO$),
 ];
