@@ -14,6 +14,10 @@ class YTT extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       child: MaterialApp(
+        theme: ThemeData.light().copyWith(
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme:
+                AppBarTheme().copyWith(color: Colors.white, elevation: 0)),
         routes: routes,
         initialRoute: initialRoute,
       ),
