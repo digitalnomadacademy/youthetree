@@ -4,11 +4,10 @@ import 'package:youthetree/ui/page/login_page.dart';
 import 'package:youthetree/ui/page/new_message.dart';
 import 'package:youthetree/ui/test/test_code_pop_up.dart';
 import 'package:youthetree/ui/page/home_page.dart';
+import 'package:youthetree/ui/page/onboarding_page.dart';
 import 'package:youthetree/ui/page/initial_test.dart';
 import 'package:youthetree/ui/page/splash_page.dart';
-import 'package:youthetree/ui/test/test_tree_updates.dart';
 import 'package:youthetree/ui/test/user_avatar_test.dart';
-import 'package:youthetree/ui/test/dynamic_column.dart';
 
 Map<String, WidgetBuilder> routes = {
   RouteName.home: (context) => HomePage(),
@@ -16,9 +15,11 @@ Map<String, WidgetBuilder> routes = {
   RouteName.newMessage: (context) => NewMessagePage(),
   RouteName.createAccount: (context) => CreateAccountPage(),
   RouteName.login: (context) => LoginPage(),
+  RouteName.onBoarding: (context) => OnBoardingPage(),
+
 
   //  TEST ROUTES
-  ...testRoutes
+  ...testRoutes,
 };
 
 String initialRoute = RouteName.initialTest;
@@ -29,6 +30,8 @@ class RouteName {
   static const String createAccount = 'createAccount';
   static const String login = 'login';
   static const String newMessage = '/newMessage';
+  static const String onBoarding = 'onBoarding';
+
 
 //  TEST ROUTES
 //  only if you need to test a widget
@@ -43,7 +46,5 @@ class RouteName {
 Map<String, WidgetBuilder> testRoutes = {
   RouteName.initialTest: (context) => InitialTestPage(),
   RouteName.testPopup: (context) => TestPopUp(),
-  RouteName.testUserAvatar: (context) => UserAvatarTest(),
-  RouteName.testDynamic: (context) => DynamicColumn(),
-  RouteName.testTreeUpdates: (context) => TestTreeUpdates(),
+  RouteName.testUserAvatar: (context) => UserAvatarTest()
 };
