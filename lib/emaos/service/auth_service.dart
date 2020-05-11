@@ -9,15 +9,13 @@ class AuthService {
   BehaviorSubject<FirebaseUser> firebaseUser$ = BehaviorSubject();
 
   AuthService() {
-    _firebaseAuth.onAuthStateChanged.listen((FirebaseUser firebaseUser) {
-      print("authStateChanged $firebaseUser");
-      firebaseUser$.add(firebaseUser);
-    });
+    _firebaseAuth.onAuthStateChanged.listen(_authStateChangedListener);
   }
 
 //  LOGIN
   Future<void> loginEmail(String email, String password) {
-    return _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+    return _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
   }
 
   Future<void> loginPhone(String phone) {
@@ -40,12 +38,13 @@ class AuthService {
   }
 
 //  CREATE ACCOUNT
-  Future<FirebaseUser> createAccountWithEmail(String email, String password) async {
+  Future<FirebaseUser> createAccountWithEmail(
+      String email, String password) async {
     print("AuthService");
     print("create account called with $email $password");
     try {
-      AuthResult authResult = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      AuthResult authResult = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
       return authResult.user;
     } catch (e) {
       print("Create account error");
@@ -58,5 +57,11 @@ class AuthService {
 
   Future<void> logout() async {
     _firebaseAuth.signOut();
+  }
+
+//  PRIVATE
+  void _authStateChangedListener(FirebaseUser firebaseUser) {
+    print("authStateChanged $firebaseUser");
+    firebaseUser$.add(firebaseUser);
   }
 }

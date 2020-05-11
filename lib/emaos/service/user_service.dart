@@ -7,8 +7,9 @@ import 'package:rxdart/rxdart.dart';
 import 'package:youthetree/emaos/service/auth_service.dart';
 
 class UserService {
-  Firestore _firestore = Firestore.instance;
   AuthService _authService;
+
+  Firestore _firestore = Firestore.instance;
 
   BehaviorSubject<UserEntity> user$ = BehaviorSubject();
 
@@ -18,6 +19,13 @@ class UserService {
     _authService.firebaseUser$.listen(_authListener);
   }
 
+  Future<void> createNewUser(String uid, String name,
+      {String email, String phone}) {
+    var data = {"name": name, "email": email, phone: "phone", "forest": []};
+    return _firestore.collection('users').document(uid).setData(data);
+  }
+
+//  PRIVATE
   void _authListener(FirebaseUser firebaseUser) {
     if (firebaseUser != null) {
       userListener = _firestore
@@ -41,12 +49,6 @@ class UserService {
       print("user entity added");
       print(userEntity);
     }
-  }
-
-  Future<void> createNewUser(String uid, String name,
-      {String email, String phone}) {
-    var data = {"name": name, "email": email, phone: "phone", "forest": []};
-    return _firestore.collection('users').document(uid).setData(data);
   }
 }
 

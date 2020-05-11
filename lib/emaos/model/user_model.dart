@@ -8,8 +8,10 @@ class UserModel {
   BehaviorSubject<UserO> user$ = BehaviorSubject();
 
   UserModel(this._userService){
-    _userService.user$.listen((UserEntity userEntity) {
-      user$.add(UserO.fromMap(userEntity.toMap()));
-    });
+    _userService.user$.listen(_userEntityListener);
+  }
+
+  void _userEntityListener(UserEntity userEntity) {
+    user$.add(UserO.fromMap(userEntity.toMap()));
   }
 }
