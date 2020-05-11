@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
@@ -11,7 +10,7 @@ class SharePopupButton extends StatelessWidget {
         alignment: Alignment.topRight,
         onPressed: () => Share.share('https//www.youthetree.com'),
         icon: Icon(
-            Icons.share
+          Icons.share
         ),
       ),
     );
