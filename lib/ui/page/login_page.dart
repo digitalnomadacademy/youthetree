@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youthetree/emaos/action/login_action.dart';
 import 'package:youthetree/router/router.dart';
 
 class LoginPage extends StatefulWidget {
@@ -8,10 +9,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   var _emailController = TextEditingController();
+  var _passwordController = TextEditingController();
   var _phoneController = TextEditingController();
 
 //Focus Nodes
   var _phoneFocusNode = FocusNode();
+
+  String get email => _emailController.text;
+  String get password => _passwordController.text;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +41,20 @@ class _LoginPageState extends State<LoginPage> {
                 textInputAction: TextInputAction.go,
                 onEditingComplete: () => _phoneFocusNode.requestFocus(),
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: UnderlineInputBorder(),
                   labelText: 'Email',
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              child: TextFormField(
+                controller: _passwordController,
+                textInputAction: TextInputAction.done,
+                onEditingComplete: () => _phoneFocusNode.requestFocus(),
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'password',
                 ),
               ),
             ),
@@ -50,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
               child: TextFormField(
                 controller: _phoneController,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: UnderlineInputBorder(),
                   labelText: 'Phone',
                 ),
               ),
@@ -63,8 +80,16 @@ class _LoginPageState extends State<LoginPage> {
                 textColor: Colors.white,
                 color: Colors.green,
                 child: Text('Login'),
-                onPressed: () {
-                  Navigator.pushNamed(context, RouteName.home );
+                onPressed: () async {
+                  try {
+                    await LoginAction.of(context).loginEmail(email, password);
+                    Navigator.pushNamed(context, RouteName.home);
+                  } catch (e) {
+                    print(e);
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(e.toString()),
+                    ));
+                  }
                 },
               ),
             ),
@@ -84,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.green,
                   child: Text('Create account'),
                   onPressed: () {
-                    Navigator.pushNamed(context, "create"); //todo add route when created
+                    Navigator.pushNamed(context, RouteName.createAccount);
                   },
                 ),
               ),

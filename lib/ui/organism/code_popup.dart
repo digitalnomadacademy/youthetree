@@ -71,7 +71,7 @@ class _CodePopupState extends State<CodePopup> {
 
   void _submit() async {
     try {
-      await LoginA.of(context).confirmCode(_codeText);
+      await LoginAction.of(context).confirmCode(_codeText);
       Navigator.pop(context);
       Navigator.pushNamed(context, RouteName.home);
       print(_codeText);
