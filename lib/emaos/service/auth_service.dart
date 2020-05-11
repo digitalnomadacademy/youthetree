@@ -1,15 +1,21 @@
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rxdart/rxdart.dart';
 
 class AuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
+  BehaviorSubject<FirebaseUser> firebaseUser$ = BehaviorSubject();
+
   AuthService() {
-    _auth.onAuthStateChanged
-        .listen((authState) => print("authStateChanged $authState"));
+    _auth.onAuthStateChanged.listen((FirebaseUser firebaseUser) {
+      print("authStateChanged $firebaseUser");
+      firebaseUser$.add(firebaseUser);
+    });
   }
 
+//  LOGIN
   Future<void> loginEmail(String email, String password) {
     return _auth.signInWithEmailAndPassword(email: email, password: password);
   }
@@ -33,16 +39,24 @@ class AuthService {
     }
   }
 
-  Future<void> createAccountWithEmail(String email, String password) async {
+//  CREATE ACCOUNT
+  Future<FirebaseUser> createAccountWithEmail(String email, String password) async {
     print("AuthService");
     print("create account called with $email $password");
     try {
-      await _auth.createUserWithEmailAndPassword(
+      AuthResult authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      return authResult.user;
     } catch (e) {
       print("Create account error");
       print(e);
       throw e;
     }
+  }
+
+//  LOGOUT
+
+  Future<void> logout() async {
+    _auth.signOut();
   }
 }

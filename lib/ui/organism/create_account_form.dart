@@ -14,6 +14,7 @@ class _EmailFormState extends State<EmailForm> {
 
   String _email;
   String _password;
+  String _name;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -21,6 +22,26 @@ class _EmailFormState extends State<EmailForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                flex: 10,
+                child: TextFormField(
+                  onSaved: (value) => _name = value,
+                  validator: (value) => value.length > 2
+                      ? null
+                      : "You have to have at least 3 letters",
+                  decoration: InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: "Name",
+                  ),
+                ),
+              ),
+              Spacer(
+                flex: 2,
+              ),
+            ],
+          ),
           Row(
             children: <Widget>[
               Expanded(
@@ -87,7 +108,7 @@ class _EmailFormState extends State<EmailForm> {
       formKey.currentState.save();
       print("login with $_email $_password");
       CreateAccountA.of(context)
-          .createAccountWithEmail(_email, _password)
+          .createAccountWithEmail(_email, _password, _name)
           .then((_) => Navigator.of(context).pushNamed(RouteName.home))
           .catchError((e) => Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text(e.toString()),
