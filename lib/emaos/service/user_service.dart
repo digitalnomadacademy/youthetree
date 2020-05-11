@@ -19,12 +19,12 @@ class UserService {
   }
 
   void _authListener(FirebaseUser firebaseUser) {
-    if (firebaseUser.uid != null) {
+    if (firebaseUser != null) {
       userListener = _firestore
           .collection('users')
           .document(firebaseUser.uid)
           .snapshots()
-          .listen((event) => _userListener(event, firebaseUser.uid));
+          .listen((event) => _userListener(event, firebaseUser));
     } else {
       if (userListener != null) {
         userListener.cancel();
@@ -33,27 +33,34 @@ class UserService {
     }
   }
 
-  void _userListener(DocumentSnapshot event, String uid) {
+  void _userListener(DocumentSnapshot event, FirebaseUser user) {
     if (event.exists && event.data.isNotEmpty) {
-      user$.add(UserEntity.fromMap(event.data, uid));
+      var userEntity = UserEntity.fromMap(event.data, user.uid,
+          email: user.email, phone: user.phoneNumber);
+      user$.add(userEntity);
+      print("user entity added");
+      print(userEntity);
     }
   }
 
-  Future<void> createNewUser(String uid, String name) {
-    var data = {"name": name, "forest": []};
+  Future<void> createNewUser(String uid, String name,
+      {String email, String phone}) {
+    var data = {"name": name, "email": email, phone: "phone", "forest": []};
     return _firestore.collection('users').document(uid).setData(data);
   }
 }
 
 class UserEntity {
   final String name;
+  final String email;
+  final String phone;
 
   ///List of tree ids that are in the user forest.
   final List<String> forest;
 
   final String uid;
 
-  const UserEntity({this.name, this.forest, this.uid});
+  const UserEntity({this.email, this.phone, this.name, this.forest, this.uid});
 
   Map<String, dynamic> toMap() {
     return {
@@ -62,10 +69,18 @@ class UserEntity {
     };
   }
 
-  factory UserEntity.fromMap(Map<String, dynamic> map, String uid) {
+  factory UserEntity.fromMap(Map<String, dynamic> map, String uid,
+      {String email, String phone}) {
     return UserEntity(
         name: map['name'] as String,
-        forest: map['forest'].map((value) => value.toString()).toList(),
+        email: email,
+        phone: phone,
+        forest: map['forest'].map<String>((value) => value.toString()).toList(),
         uid: uid);
+  }
+
+  @override
+  String toString() {
+    return 'UserEntity{name: $name, email: $email, phone: $phone, forest: $forest, uid: $uid}';
   }
 }

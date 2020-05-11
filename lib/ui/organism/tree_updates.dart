@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youthetree/emaos/observable/tree_updates.dart';
+import 'package:youthetree/ui/atom/user_avatar.dart';
 
 class TreeUpdates extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<TreeUpdateListO>(
-      builder: (_, treeUpdatesO, __) => ListView.builder(
-          itemCount: treeUpdatesO.list.length,
-          itemBuilder: (context, index) {
-            TreeUpdateO tree = treeUpdatesO.list[index];
-            return ListTile(
-              title: Text(
-                tree.treeName,
-              ),
-              subtitle: Text(tree.updateMessage),
-              leading: Icon(
-                _getIcon(tree),
-                color: Colors.green,
-              ),
-            );
-          }),
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[UserAvatar()],
+        ),
+        Expanded(
+          child: Consumer<TreeUpdateListO>(
+            builder: (_, treeUpdatesO, __) => ListView.builder(
+                itemCount: treeUpdatesO.list.length,
+                itemBuilder: (context, index) {
+                  TreeUpdateO tree = treeUpdatesO.list[index];
+                  return ListTile(
+                    title: Text(
+                      tree.treeName,
+                    ),
+                    subtitle: Text(tree.updateMessage),
+                    leading: Icon(
+                      _getIcon(tree),
+                      color: Colors.green,
+                    ),
+                  );
+                }),
+          ),
+        ),
+      ],
     );
   }
 

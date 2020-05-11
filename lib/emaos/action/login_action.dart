@@ -19,5 +19,10 @@ class LoginAction {
     return _authService.confirmCode(code);
   }
 
-  factory LoginAction.of(BuildContext context) => LoginAction(StaticProvider.of(context));
+
+  Future<void> logOut() => _authService.logout();
+
+  factory LoginAction.of(BuildContext context) =>
+      LoginAction(StaticProvider.of(context));
+
 }
