@@ -24,7 +24,9 @@ class AddTreePhoto extends StatelessWidget {
         icon: Icon(Icons.add),
         onPressed: () async {
           var image = await ImagePicker.pickImage(source: ImageSource.camera);
-          return TreeAction.of(context).addTreeImage(image);
+          if (image != null) {
+            return TreeAction.of(context).addTreeImage(image);
+          }
         },
       ),
     );
