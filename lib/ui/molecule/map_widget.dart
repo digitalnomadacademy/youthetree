@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
@@ -5,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:youthetree/emaos/observable/location_observable.dart';
+import 'package:youthetree/emaos/observable/tree_marker_observable.dart';
 
 const double kCameraZoom = 15.0;
 
@@ -17,8 +20,6 @@ class _MapWidgetState extends State<MapWidget> {
   GoogleMapController mapController;
   Completer<GoogleMapController> _controller = Completer();
   LocationData currentLocation;
-  final Map<String, Marker> _markers = {};
-
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +29,46 @@ class _MapWidgetState extends State<MapWidget> {
         zoom: kCameraZoom,
       );
     }
-    return Consumer<LocationObservable>(
-      builder:(context,location,__)=> GoogleMap(
-        myLocationEnabled: true,
-        mapType: MapType.hybrid,
-        initialCameraPosition: CameraPosition(
-          target: LatLng(
-            location.latitude,
-            location.longitude
+    return Consumer2<LocationObservable, TreeMarkerSetObservable>(
+      builder: (context, location, treeMarkers, __) {
+        var currentLocationMarker = Marker(
+            markerId: MarkerId("current location"),
+            icon:
+                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+            rotation: pi / 4,
+            alpha: 0.7,
+            position: LatLng(location.latitude, location.longitude));
+
+        var treeMarkersSet = treeMarkers.treeMarkers
+            .map(
+              (e) => Marker(
+                  markerId: MarkerId(e.treeId),
+                  rotation: -pi / 4,
+                  icon: e.isInOurForest
+                      ? BitmapDescriptor.defaultMarkerWithHue(
+                          BitmapDescriptor.hueGreen)
+                      : BitmapDescriptor.defaultMarkerWithHue(
+                          BitmapDescriptor.hueOrange),
+                  position: LatLng(e.location.latitude, e.location.longitude)),
+            )
+            .toSet();
+        Set<Marker> allMarkers =
+            Set.from([...treeMarkersSet, currentLocationMarker]);
+
+        return GoogleMap(
+          myLocationEnabled: true,
+          mapType: MapType.hybrid,
+          initialCameraPosition: CameraPosition(
+            target: LatLng(location.latitude, location.longitude),
+            zoom: kCameraZoom,
           ),
-          zoom: kCameraZoom,
-        ),
-        markers: _markers.values.toSet(),
-        onMapCreated: (GoogleMapController controller) {
-          mapController = controller;
-          showPinOnMap();
-        },
-      ),
+          markers: allMarkers,
+          onMapCreated: (GoogleMapController controller) {
+            mapController = controller;
+            showPinOnMap();
+          },
+        );
+      },
     );
   }
 
@@ -58,14 +82,5 @@ class _MapWidgetState extends State<MapWidget> {
     );
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(cPosition));
-    setState(() {
-      //_markers.clear();
-      final marker = Marker(
-        markerId: MarkerId("curr_loc"),
-        position: LatLng(currentLocation.latitude, currentLocation.longitude),
-        infoWindow: InfoWindow(title: 'My Location'),
-      );
-      _markers["Current Location"] = marker;
-    });
   }
 }

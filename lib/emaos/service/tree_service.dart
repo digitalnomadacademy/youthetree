@@ -2,18 +2,37 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:location/location.dart';
 
 class TreeService {
   var _storage = FirebaseStorage.instance;
   var _firestore = Firestore.instance;
+  var _geo = Geoflutterfire();
 
-  Future<void> createTreeWithImage(File image) async {
+  Future<List<TreeEntity>> getTrees() async {
+    var documents = await _firestore.collection("trees").getDocuments();
+    List<TreeEntity> trees = documents.documents
+        .map((snapshot) => TreeEntity.fromMap(snapshot.data))
+        .toList();
+    return trees;
+  }
+
+  Future<void> createTreeWithImage(
+      File image, String uid, LocationData location) async {
     try {
       String url = await _uploadImage(image);
       // create the document in firestore for that tree with url of the image
 
       await _firestore.collection("trees").add(
-        {"photoUrl": url},
+        {
+          "explorerUid": uid,
+          "location": _geo.point(
+              latitude: location.latitude, longitude: location.longitude),
+          "photos": [
+            {"authorUid": uid, "photoUrl": url}
+          ]
+        },
       );
       print("tree created in firestore");
     } catch (e) {
@@ -22,14 +41,18 @@ class TreeService {
     }
   }
 
-  Future<void> updateTreeImage(File image, String treeId) async {
+  Future<void> updateTreeImage(File image, String treeId, String uid) async {
     try {
       String url = await _uploadImage(image);
       // create the document in firestore for that tree with url of the image
 
-      await _firestore.collection("trees").document(treeId).updateData(
-        {"photoUrl": url},
-      );
+      await _firestore.runTransaction((Transaction transaction) async {
+        var document = _firestore.collection("trees").document(treeId);
+        DocumentSnapshot treeSnapshot = await transaction.get(document);
+        var treeData = treeSnapshot.data;
+        treeData["photos"].add({"authorUid": uid, "photoUrl": url});
+        await transaction.update(document, treeData);
+      });
       print("tree created in firestore");
     } catch (e) {
       print(e);
@@ -55,19 +78,67 @@ class TreeService {
 }
 
 class TreeEntity {
-  final String photoUrl;
-
-  TreeEntity({this.photoUrl});
+  final GeoPoint location;
+  final double altitude;
+  final String name;
+  final String explorerUid;
+  final List<TreePhotoEntity> photos;
+  const TreeEntity(
+      {this.location, this.altitude, this.name, this.photos, this.explorerUid});
 
   Map<String, dynamic> toMap() {
     return {
-      'photoUrl': this.photoUrl,
+      'location': this.location,
+      'altitude': this.altitude,
+      'name': this.name,
+      'explorerUid': this.explorerUid,
+      'photos': this.photos,
     };
   }
 
   factory TreeEntity.fromMap(Map<String, dynamic> map) {
     return TreeEntity(
+      location: map['location']["geopoint"],
+      altitude: map['altitude'] as double,
+      name: map['name'] as String,
+      explorerUid: map['explorerUid'] as String,
+      photos: map['photos']
+          .map((photoMap) => TreePhotoEntity.fromMap(map))
+          .toList(),
+    );
+  }
+}
+
+class TreeMessageEntity {
+  final String message;
+  final String authorUid;
+
+  const TreeMessageEntity({
+    this.message,
+    this.authorUid,
+  });
+}
+
+class TreePhotoEntity {
+  final String photoUrl;
+  final String authorUid;
+
+  const TreePhotoEntity({
+    this.photoUrl,
+    this.authorUid,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'photoUrl': this.photoUrl,
+      'authorUid': this.authorUid,
+    };
+  }
+
+  factory TreePhotoEntity.fromMap(Map<String, dynamic> map) {
+    return TreePhotoEntity(
       photoUrl: map['photoUrl'] as String,
+      authorUid: map['authorUid'] as String,
     );
   }
 }
