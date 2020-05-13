@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
-class SharePopup extends StatelessWidget {
-  const SharePopup({
+class ShareButton extends StatelessWidget {
+  const ShareButton({
     Key key,
   }) : super(key: key);
 

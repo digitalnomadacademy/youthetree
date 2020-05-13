@@ -5,7 +5,7 @@ import 'package:youthetree/ui/page/initial_test.dart';
 import 'package:youthetree/ui/page/splash_page.dart';
 import 'package:youthetree/ui/test/user_avatar_test.dart';
 import 'package:youthetree/ui/test/dynamic_column.dart';
-import 'package:youthetree/ui/test/test_share_popup.dart';
+import 'package:youthetree/ui/test/test_shareButton.dart';
 
 
 
@@ -28,7 +28,7 @@ class RouteName {
   static const String testPopup = 'testPopup';
   static const String testUserAvatar = 'testUserAvatar';
   static const String testDynamic = 'testDynamicColumn';
-  static const String testSharePopup = 'testSharePopup';
+  static const String testShareButton = 'testSharePopup';
 
 }
 
@@ -37,5 +37,5 @@ Map<String, WidgetBuilder> testRoutes = {
   RouteName.testPopup: (context) => TestPopUp(),
   RouteName.testUserAvatar: (context) => UserAvatarTest(),
   RouteName.testDynamic: (context)  =>DynamicColumn(),
-  RouteName.testSharePopup: (context) => SharePopup(),
+  RouteName.testShareButton: (context) => ShareButtonTest(),
 };
