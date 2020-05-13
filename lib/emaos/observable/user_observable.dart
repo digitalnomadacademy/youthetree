@@ -1,9 +1,9 @@
-class UserO {
+class UserObservable {
   final String email;
   final String name;
   final String phone;
 
-  UserO({this.email, this.phone, this.name});
+  UserObservable({this.email, this.phone, this.name});
 
 
   Map<String, dynamic> toMap() {
@@ -14,8 +14,8 @@ class UserO {
     };
   }
 
-  factory UserO.fromMap(Map<String, dynamic> map) {
-    return UserO(
+  factory UserObservable.fromMap(Map<String, dynamic> map) {
+    return UserObservable(
       email: map['email'] as String,
       name: map['name'] as String,
       phone: map['phone'] as String,

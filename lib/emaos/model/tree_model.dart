@@ -7,7 +7,7 @@ class TreeModel {
   final TreeService _treeService;
 
 //  OBSERVABLES
-  BehaviorSubject<TreeUpdateListO> treeUpdateListO$ = BehaviorSubject();
+  BehaviorSubject<TreeUpdateListObservable> treeUpdateListO$ = BehaviorSubject();
 
 //  CONSTRUCTOR
   TreeModel(this._treeService) {
@@ -26,7 +26,7 @@ class TreeModel {
   }
 }
 
-var _mockTreeUpdateO = TreeUpdateListO(
+var _mockTreeUpdateO = TreeUpdateListObservable(
   list: [
     TreeUpdateO(
         treeName: "Cherry",
