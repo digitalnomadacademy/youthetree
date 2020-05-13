@@ -17,7 +17,7 @@ Map<String, WidgetBuilder> routes = {
   ...testRoutes
 };
 
-String initialRoute = RouteName.testSharePopup;
+String initialRoute = RouteName.initialTest;
 
 class RouteName {
   static const String home = '/';
