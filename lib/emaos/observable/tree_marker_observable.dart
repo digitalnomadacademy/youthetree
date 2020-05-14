@@ -4,9 +4,14 @@ import 'package:youthetree/emaos/observable/location_observable.dart';
 class TreeMarkerSetObservable {
   final Set<TreeMarkerObservable> treeMarkers;
 
-  const TreeMarkerSetObservable({
-    this.treeMarkers,
+  TreeMarkerSetObservable({
+    this.treeMarkers = const <TreeMarkerObservable>{},
   });
+
+  @override
+  String toString() {
+    return 'TreeMarkerSetObservable{treeMarkers: ${treeMarkers.length}, first:${treeMarkers.first}';
+  }
 }
 
 class TreeMarkerObservable {
@@ -19,4 +24,9 @@ class TreeMarkerObservable {
     @required this.treeId,
     this.isInOurForest = false,
   });
+
+  @override
+  String toString() {
+    return 'TreeMarkerObservable{location: $location, treeId: $treeId, isInOurForest: $isInOurForest}';
+  }
 }

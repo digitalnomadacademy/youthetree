@@ -24,7 +24,7 @@ dependencies:
   rxdart: ^0.23.1
   image_picker: ^0.6.6+1
   geoflutterfire: ^2.1.0
-
+  simple_logger: ^1.7.0
 
 
 dev_dependencies:

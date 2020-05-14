@@ -21,4 +21,9 @@ class LocationObservable {
     this.accuracy = 0,
     this.altitude = 0,
   });
+
+  @override
+  String toString() {
+    return 'LocationObservable{latitude: $latitude, longitude: $longitude}';
+  }
 }

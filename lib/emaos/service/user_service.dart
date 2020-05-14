@@ -51,7 +51,6 @@ class UserService {
     }
   }
 
-  Future getForest() {}
 }
 
 class UserEntity {

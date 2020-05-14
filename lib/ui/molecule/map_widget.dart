@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
+import 'package:youthetree/emaos/action/tree_action.dart';
 import 'package:youthetree/emaos/observable/location_observable.dart';
 import 'package:youthetree/emaos/observable/tree_marker_observable.dart';
 
@@ -20,6 +21,13 @@ class _MapWidgetState extends State<MapWidget> {
   GoogleMapController mapController;
   Completer<GoogleMapController> _controller = Completer();
   LocationData currentLocation;
+
+
+  @override
+  void initState() {
+    super.initState();
+    TreeAction.of(context).refreshTreeMarkers();
+  }
 
   @override
   Widget build(BuildContext context) {

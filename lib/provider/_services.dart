@@ -13,6 +13,7 @@ List<SingleChildWidget> services = [
   ),
   Provider<LocationService>(
     create: (context) => LocationService(),
+    lazy: false,
   ),
   Provider<UserService>(
     create: (context) => UserService(

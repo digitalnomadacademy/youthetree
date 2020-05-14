@@ -4,6 +4,7 @@ import 'package:youthetree/emaos/model/location_model.dart';
 import 'package:youthetree/emaos/model/tree_model.dart';
 import 'package:youthetree/emaos/model/user_model.dart';
 import 'package:youthetree/emaos/observable/location_observable.dart';
+import 'package:youthetree/emaos/observable/tree_marker_observable.dart';
 import 'package:youthetree/emaos/observable/tree_updates.dart';
 import 'package:youthetree/emaos/observable/user_observable.dart';
 import 'package:youthetree/provider/provider.dart';
@@ -15,6 +16,10 @@ List<SingleChildWidget> observables = [
       initialData: TreeUpdateListObservable(),
       create: (context) =>
           StaticProvider.of<TreeModel>(context).treeUpdateListO$),
+  StreamProvider<TreeMarkerSetObservable>(
+      initialData: TreeMarkerSetObservable(),
+      create: (context) =>
+          StaticProvider.of<TreeModel>(context).treeMarkersSet$),
   StreamProvider<UserObservable>(
       initialData: UserObservable(),
       create: (context) => StaticProvider.of<UserModel>(context).user$),
