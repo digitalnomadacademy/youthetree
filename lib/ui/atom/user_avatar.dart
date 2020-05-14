@@ -7,7 +7,7 @@ import 'package:youthetree/router/router.dart';
 class UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserO>(builder: (context, UserO userO, child) {
+    return Consumer<UserObservable>(builder: (context, UserObservable userO, child) {
       return GestureDetector(
         onTap: () => showDialog(
             context: context,
@@ -36,7 +36,7 @@ class UserAvatar extends StatelessWidget {
     });
   }
 
-  String _getInitials(UserO userO) {
+  String _getInitials(UserObservable userO) {
     String text;
     if (userO.name != null) {
       text = userO.name.substring(0, 2);

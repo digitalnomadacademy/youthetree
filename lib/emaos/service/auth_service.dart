@@ -12,6 +12,8 @@ class AuthService {
     _firebaseAuth.onAuthStateChanged.listen(_authStateChangedListener);
   }
 
+  String get uid => firebaseUser$.value?.uid ?? "dev_test";
+
 //  LOGIN
   Future<void> loginEmail(String email, String password) {
     return _firebaseAuth.signInWithEmailAndPassword(

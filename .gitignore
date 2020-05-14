@@ -41,3 +41,7 @@ app.*.map.json
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+!/lib/ui/molecule/map_widget2.dart
+/lib/ui/molecule/map_widget2.dart
+!/test/
+!/lib/ui/molecule/map_widget1.dart
