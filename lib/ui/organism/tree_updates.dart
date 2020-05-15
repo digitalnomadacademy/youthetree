@@ -12,7 +12,7 @@ class TreeUpdates extends StatelessWidget {
           children: <Widget>[UserAvatar()],
         ),
         Expanded(
-          child: Consumer<TreeUpdateListO>(
+          child: Consumer<TreeUpdateListObservable>(
             builder: (_, treeUpdatesO, __) => ListView.builder(
                 itemCount: treeUpdatesO.list.length,
                 itemBuilder: (context, index) {

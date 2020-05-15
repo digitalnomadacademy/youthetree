@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 
-class TreeUpdateListO {
+class TreeUpdateListObservable {
   List<TreeUpdateO> list;
 
-  TreeUpdateListO({
+  TreeUpdateListObservable({
     this.list = const [],
   });
 }
