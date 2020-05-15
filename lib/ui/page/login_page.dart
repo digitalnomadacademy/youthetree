@@ -89,8 +89,11 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.pushNamed(context, RouteName.home);
                     } else if (_phoneController.text.length == 0 &&
                         _emailController.text.length >= 0) {
-                      await LoginAction.of(context).loginEmail(email,password);
+                      await LoginAction.of(context).loginEmail(email, password);
                       Navigator.pushNamed(context, RouteName.home);
+                    } else {
+                      throw Exception(
+                          "you can log in with either email or phone");
                     }
                   } catch (e) {
                     print(e);
