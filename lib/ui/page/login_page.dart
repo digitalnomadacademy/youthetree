@@ -17,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
 
   String get email => _emailController.text;
   String get password => _passwordController.text;
+  String get phone => _phoneController.text;
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +83,15 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text('Login'),
                 onPressed: () async {
                   try {
-                    await LoginAction.of(context).loginEmail(email, password);
-                    Navigator.pushNamed(context, RouteName.home);
+                    if (_phoneController.text.length >= 0 &&
+                        _emailController.text.length == 0) {
+                      await LoginAction.of(context).loginPhone(phone);
+                      Navigator.pushNamed(context, RouteName.home);
+                    } else if (_phoneController.text.length == 0 &&
+                        _emailController.text.length >= 0) {
+                      await LoginAction.of(context).loginEmail(email,password);
+                      Navigator.pushNamed(context, RouteName.home);
+                    }
                   } catch (e) {
                     print(e);
                     Scaffold.of(context).showSnackBar(SnackBar(
