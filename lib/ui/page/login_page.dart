@@ -72,8 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            Spacer(),
-            Container(
+            Expanded(
+            child:Container(
               height: 50,
               width: 200,
               child: RaisedButton(
@@ -93,13 +93,17 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
             ),
-            Container(
+            ),
+            Expanded(
+            child: Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(10),
                 child: Text(
                   'Or',
                   style: TextStyle(fontSize: 20),
-                )),
+                ),
+            ),
+            ),
             Expanded(
               child: Container(
                 height: 50,
