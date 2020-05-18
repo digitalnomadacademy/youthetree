@@ -19,6 +19,10 @@ class _LoginPageState extends State<LoginPage> {
   String get password => _passwordController.text;
   String get phone => _phoneController.text;
 
+  LoginState get loginState => email.isEmpty && phone.isEmpty
+      ? LoginState.ready
+      : email.isNotEmpty ? LoginState.email : LoginState.phone;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,49 +34,70 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Spacer(),
-            Text(
-              'Login in with Email',
-              style: TextStyle(fontSize: 20),
+            SizedBox(
+              height: 30,
             ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                controller: _emailController,
-                textInputAction: TextInputAction.go,
-                onEditingComplete: () => _phoneFocusNode.requestFocus(),
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Email',
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                controller: _passwordController,
-                textInputAction: TextInputAction.done,
-                onEditingComplete: () => _phoneFocusNode.requestFocus(),
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'password',
-                ),
-              ),
-            ),
-            Text(
-              'Or login with Phone',
-              style: TextStyle(fontSize: 20),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                controller: _phoneController,
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Phone',
-                ),
-              ),
-            ),
+            loginState == LoginState.phone
+                ? Container()
+                : Text(
+                    'Login in with Email',
+                    style: TextStyle(fontSize: 20),
+                  ),
+            loginState == LoginState.phone
+                ? Container()
+                : Container(
+                    padding: EdgeInsets.all(10),
+                    child: TextFormField(
+                      controller: _emailController,
+                      onChanged: (_)=>setState(() {
+
+                      }),
+                      textInputAction: TextInputAction.go,
+                      onEditingComplete: () => _phoneFocusNode.requestFocus(),
+                      decoration: InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'Email',
+                      ),
+                    ),
+                  ),
+            loginState == LoginState.phone
+                ? Container()
+                : Container(
+                    padding: EdgeInsets.all(10),
+                    child: TextFormField(
+                      controller: _passwordController,
+                      textInputAction: TextInputAction.done,
+                      onChanged: (_)=>setState(() {
+
+                      }),
+                      onEditingComplete: () => _phoneFocusNode.requestFocus(),
+                      decoration: InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'Password',
+                      ),
+                    ),
+                  ),
+            loginState == LoginState.email
+                ? Container()
+                : Text(
+                    'Login with Phone',
+                    style: TextStyle(fontSize: 20),
+                  ),
+            loginState == LoginState.email
+                ? Container()
+                : Container(
+                    padding: EdgeInsets.all(10),
+                    child: TextFormField(
+                      onChanged: (_)=>setState(() {
+
+                      }),
+                      controller: _phoneController,
+                      decoration: InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'Phone',
+                      ),
+                    ),
+                  ),
             Spacer(),
             Container(
               height: 50,
@@ -81,27 +106,24 @@ class _LoginPageState extends State<LoginPage> {
                 textColor: Colors.white,
                 color: Colors.green,
                 child: Text('Login'),
-                onPressed: () async {
-                  try {
-                    if (_phoneController.text.length >= 0 &&
-                        _emailController.text.length == 0) {
-                      await LoginAction.of(context).loginPhone(phone);
-                      Navigator.pushNamed(context, RouteName.home);
-                    } else if (_phoneController.text.length == 0 &&
-                        _emailController.text.length >= 0) {
-                      await LoginAction.of(context).loginEmail(email, password);
-                      Navigator.pushNamed(context, RouteName.home);
-                    } else {
-                      throw Exception(
-                          "you can log in with either email or phone");
-                    }
-                  } catch (e) {
-                    print(e);
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(e.toString()),
-                    ));
-                  }
-                },
+                onPressed: loginState == LoginState.ready
+                    ? null
+                    : () async {
+                        try {
+                          if (loginState == LoginState.phone) {
+                            await LoginAction.of(context).loginPhone(phone);
+                            Navigator.pushNamed(context, RouteName.home);
+                          } else if (loginState == LoginState.email) {
+                            await LoginAction.of(context)
+                                .loginEmail(email, password);
+                            Navigator.pushNamed(context, RouteName.home);
+                          }
+                        } catch (e) {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text(e.toString()),
+                          ));
+                        }
+                      },
               ),
             ),
             Container(
@@ -115,10 +137,9 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                 height: 50,
                 width: 200,
-                child: RaisedButton(
-                  textColor: Colors.white,
-                  color: Colors.green,
-                  child: Text('Create account'),
+                child: FlatButton(
+                  textColor: Colors.blue,
+                  child: Text('Create account',style: TextStyle(fontSize: 18),),
                   onPressed: () {
                     Navigator.pushNamed(context, RouteName.createAccount);
                   },
@@ -132,3 +153,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+enum LoginState { email, phone, ready }
