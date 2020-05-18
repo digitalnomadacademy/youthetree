@@ -30,7 +30,6 @@ class LocationService {
     if (permissionGranted == PermissionStatus.denied) {
       permissionGranted = await location.requestPermission();
       if (permissionGranted != PermissionStatus.granted) {
-        print("location is not permitted");
         return;
       }
     }
@@ -41,7 +40,6 @@ class LocationService {
   }
 
   void _onLocationChanged(LocationData location) {
-    print("location changed $location");
     _updateLocationStream(location);
   }
 

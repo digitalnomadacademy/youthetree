@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:youthetree/emaos/service/auth_service.dart';
+import 'package:youthetree/emaos/service/connectivity_service.dart';
 import 'package:youthetree/emaos/service/forest_service.dart';
 import 'package:youthetree/emaos/service/location_service.dart';
 import 'package:youthetree/emaos/service/tree_service.dart';
@@ -27,5 +28,8 @@ List<SingleChildWidget> services = [
   ),
   Provider<TreeService>(
     create: (context) => TreeService(),
+  ),
+  Provider<ConnectivityService>(
+    create: (context) => ConnectivityService(),
   ),
 ];
