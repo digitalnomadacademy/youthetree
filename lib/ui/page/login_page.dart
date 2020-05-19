@@ -26,100 +26,115 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Spacer(),
-            Text(
-              'Login in with Email',
-              style: TextStyle(fontSize: 20),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                controller: _emailController,
-                textInputAction: TextInputAction.go,
-                onEditingComplete: () => _phoneFocusNode.requestFocus(),
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Email',
+        child: LayoutBuilder(
+          builder: (context, vp) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: vp.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Spacer(),
+                      Text(
+                        'Login in with Email',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        child: TextFormField(
+                          controller: _emailController,
+                          textInputAction: TextInputAction.go,
+                          onEditingComplete: () =>
+                              _phoneFocusNode.requestFocus(),
+                          decoration: InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Email',
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        child: TextFormField(
+                          controller: _passwordController,
+                          textInputAction: TextInputAction.done,
+                          onEditingComplete: () =>
+                              _phoneFocusNode.requestFocus(),
+                          decoration: InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'password',
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Or login with Phone',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        child: TextFormField(
+                          controller: _phoneController,
+                          decoration: InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Phone',
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 50,
+                          width: 200,
+                          child: RaisedButton(
+                            textColor: Colors.white,
+                            color: Colors.green,
+                            child: Text('Login'),
+                            onPressed: () async {
+                              try {
+                                await LoginAction.of(context)
+                                    .loginEmail(email, password);
+                                Navigator.pushNamed(context, RouteName.home);
+                              } catch (e) {
+                                print(e);
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text(e.toString()),
+                                ));
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            'Or',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          height: 50,
+                          width: 200,
+                          child: RaisedButton(
+                            textColor: Colors.white,
+                            color: Colors.green,
+                            child: Text('Create account'),
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                  context, RouteName.createAccount);
+                            },
+                          ),
+                        ),
+                      ),
+                      Spacer(flex: 3),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                controller: _passwordController,
-                textInputAction: TextInputAction.done,
-                onEditingComplete: () => _phoneFocusNode.requestFocus(),
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'password',
-                ),
-              ),
-            ),
-            Text(
-              'Or login with Phone',
-              style: TextStyle(fontSize: 20),
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: TextFormField(
-                controller: _phoneController,
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Phone',
-                ),
-              ),
-            ),
-            Expanded(
-            child:Container(
-              height: 50,
-              width: 200,
-              child: RaisedButton(
-                textColor: Colors.white,
-                color: Colors.green,
-                child: Text('Login'),
-                onPressed: () async {
-                  try {
-                    await LoginAction.of(context).loginEmail(email, password);
-                    Navigator.pushNamed(context, RouteName.home);
-                  } catch (e) {
-                    print(e);
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(e.toString()),
-                    ));
-                  }
-                },
-              ),
-            ),
-            ),
-            Expanded(
-            child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'Or',
-                  style: TextStyle(fontSize: 20),
-                ),
-            ),
-            ),
-            Expanded(
-              child: Container(
-                height: 50,
-                width: 200,
-                child: RaisedButton(
-                  textColor: Colors.white,
-                  color: Colors.green,
-                  child: Text('Create account'),
-                  onPressed: () {
-                    Navigator.pushNamed(context, RouteName.createAccount);
-                  },
-                ),
-              ),
-            ),
-            Spacer(flex: 3),
-          ],
+            );
+          },
         ),
       ),
     );
