@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:youthetree/emaos/service/auth_service.dart';
-import 'package:youthetree/emaos/service/user_service.dart';
 
 class ForestService {
   final AuthService _authService;
