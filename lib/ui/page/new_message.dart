@@ -8,6 +8,13 @@ class NewMessagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(centerTitle: true,
+        title: Text(
+          'New Message',
+          style: TextStyle(color: Colors.green, fontSize: 25,),
+        ),
+        backgroundColor: Colors.transparent,
+      ),
       body: ResizeWidget(
         topChild: AddTreePhoto(),
         bottomChild: CreateYourMessage(),
