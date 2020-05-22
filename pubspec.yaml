@@ -27,6 +27,7 @@ dependencies:
   geoflutterfire: ^2.1.0
   simple_logger: ^1.7.0
   connectivity: ^0.4.8+6
+  flutter_secure_storage: ^3.3.3
 
 dev_dependencies:
   build_runner: ^1.2.7

@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AuthService {
+  static const _loggedOutUid = "dev_test";
+
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   BehaviorSubject<FirebaseUser> firebaseUser$ = BehaviorSubject();
@@ -12,7 +14,9 @@ class AuthService {
     _firebaseAuth.onAuthStateChanged.listen(_authStateChangedListener);
   }
 
-  String get uid => firebaseUser$.value?.uid ?? "dev_test";
+  String get uid => firebaseUser$.value?.uid ?? _loggedOutUid;
+
+  bool get isLoggedIn => uid != _loggedOutUid;
 
 //  LOGIN
   Future<void> loginEmail(String email, String password) {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:youthetree/emaos/action/splash_action.dart';
+import 'package:youthetree/logger/logger.dart';
 import 'package:youthetree/router/router.dart';
 
 class SplashPage extends StatefulWidget {
@@ -46,25 +47,28 @@ class _SplashPageState extends State<SplashPage> {
 
   FutureOr<dynamic> _checkForAppInit() {
     SplashAction.of(context).isAppInitialized().then((value) => value
-        ? Navigator.pushNamed(context,
-            RouteName.login) // check if needs to go to home page or login
-        : showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                  title: Text("Action Needed"),
-                  content: Text("Please check your internet connection, "
-                      "and your location permission for YTT app, and press "
-                      "OK when you are done"),
-                  actions: <Widget>[
-                    RaisedButton(
-                      child: Text("OK"),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        return _checkForAppInit();
-                      },
-                    )
-                  ],
-                )));
+        ? _handleAppInitialized() // check if needs to go to home page or login
+        : _showDialogue());
+  }
+
+  Future _showDialogue() {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text("Action Needed"),
+              content: Text("Please check your internet connection, "
+                  "and your location permission for YTT app, and press "
+                  "OK when you are done"),
+              actions: <Widget>[
+                RaisedButton(
+                  child: Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    return _checkForAppInit();
+                  },
+                )
+              ],
+            ));
   }
 
   void _startAnimation() async {
@@ -72,5 +76,22 @@ class _SplashPageState extends State<SplashPage> {
     setState(() {
       opacity = 1;
     });
+  }
+
+  void _handleAppInitialized() async {
+    l.info("handling app init");
+    var firstTime = await SplashAction.of(context).isFirstTime();
+
+    var loggedIn = SplashAction.of(context).isLoggedIn();
+    if (firstTime) {
+      l.info("pushing to onboarding, first time $firstTime");
+      Navigator.pushReplacementNamed(context, RouteName.onBoarding);
+    } else if (loggedIn) {
+      l.info("pushing to home, first time $firstTime and logged in $loggedIn");
+      Navigator.pushReplacementNamed(context, RouteName.home);
+    } else {
+      l.info("pushing to login, first time $firstTime and logged in $loggedIn");
+      Navigator.pushReplacementNamed(context, RouteName.login);
+    }
   }
 }
