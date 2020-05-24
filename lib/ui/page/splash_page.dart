@@ -9,27 +9,37 @@ class SplashPage extends StatefulWidget {
   _SplashPageState createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   double opacity = 0;
+  AnimationController _controller;
+  Animation<Offset> _animation;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(251, 222, 214, 1),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Center(
-              child: Text(
-                "YTT",
-                style: Theme.of(context).textTheme.headline1,
+      body: Stack(
+        children: [
+          Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  color: Color.fromRGBO(251, 222, 214, 1),
+                ),
               ),
-            ),
+              AnimatedOpacity(
+                  duration: Duration(milliseconds: 2000),
+                  opacity: opacity,
+                  child: Image.asset("assets/tree.jpg")),
+            ],
           ),
-          AnimatedOpacity(
-              duration: Duration(milliseconds: 500),
-              opacity: opacity,
-              child: Image.asset("assets/tree.jpg")),
+          SlideTransition(
+            position: _animation,
+            child: Text(
+              'YTT',
+              style: Theme.of(context).textTheme.headline1,
+            ),
+          )
         ],
       ),
     );
@@ -40,10 +50,18 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     _waitForAppInit();
     _startAnimation();
+
+    _textAnimation();
+    _controller.forward();
+  }
+  @override
+  void dispose(){   // ova funkcija treba da se pozove ali ne znam gde?
+    super.dispose();
+    _controller.dispose();
   }
 
   Future _waitForAppInit() =>
-      Future.delayed(Duration(milliseconds: 1500), _checkForAppInit);
+      Future.delayed(Duration(milliseconds: 4500), _checkForAppInit);
 
   FutureOr<dynamic> _checkForAppInit() {
     SplashAction.of(context).isAppInitialized().then((value) => value
@@ -76,6 +94,15 @@ class _SplashPageState extends State<SplashPage> {
     setState(() {
       opacity = 1;
     });
+  }
+
+  void _textAnimation() async {
+    _controller = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 5000));
+    _animation = Tween<Offset>(begin: Offset(0.5, -3.0), end: Offset(0.5, 0.4))
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.linearToEaseOut));
+
+
   }
 
   void _handleAppInitialized() async {
