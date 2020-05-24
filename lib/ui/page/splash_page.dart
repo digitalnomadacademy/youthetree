@@ -18,6 +18,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(251, 222, 214, 1),
+      // wrapped with stack to enable text widget to slide on top without interacting with rest of content
       body: Stack(
         children: [
           Column(
@@ -33,6 +34,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
                   child: Image.asset("assets/tree.jpg")),
             ],
           ),
+          // moved text widget from column to top of stack
           SlideTransition(
             position: _animation,
             child: Text(
@@ -55,7 +57,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     _controller.forward();
   }
   @override
-  void dispose(){   // ova funkcija treba da se pozove ali ne znam gde?
+  void dispose(){   // this function must be called to disable controller not to take memory
     super.dispose();
     _controller.dispose();
   }
@@ -100,7 +102,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     _controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: 5000));
     _animation = Tween<Offset>(begin: Offset(0.5, -3.0), end: Offset(0.5, 0.4))
-        .animate(CurvedAnimation(parent: _controller, curve: Curves.linearToEaseOut));
+        .animate(CurvedAnimation(parent: _controller, curve: Curves.linearToEaseOut)); //so many curves!!!
 
 
   }
